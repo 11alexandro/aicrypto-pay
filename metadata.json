@@ -1,0 +1,6 @@
+{
+  "name": "AICRYPTO PAY",
+  "description": "Premium crypto escrow workspace for freelancers and clients. Secure payments, disputes management, and automated escrow smart contracts.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}
