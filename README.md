@@ -5,7 +5,7 @@
 <h1 align="center">AICrypto Pay</h1>
 
 <p align="center">
-  <strong>The Next-Generation AI-Driven Cryptocurrency Payment Gateway</strong>
+  <strong>An Advanced, Enterprise-Grade Automated Cryptocurrency Payment Gateway</strong>
 </p>
 
 <p align="center">
@@ -14,94 +14,39 @@
   <img src="https://img.shields.io/badge/Node.js-Express-339933?style=for-the-badge&logo=nodedotjs" alt="Node" />
   <img src="https://img.shields.io/badge/Socket.io-Realtime-010101?style=for-the-badge&logo=socketdotio" alt="Socket.io" />
   <img src="https://img.shields.io/badge/TailwindCSS-v4.0-38B2AC?style=for-the-badge&logo=tailwind-css" alt="Tailwind" />
-  <img src="https://img.shields.io/badge/Google-Gemini_AI-4285F4?style=for-the-badge&logo=google" alt="Gemini" />
 </p>
 
 ---
 
 ## 🚀 Overview
 
-**AICrypto Pay** is an interactive, real-time web application built to simulate and explore a futuristic AI-driven cryptocurrency payment ecosystem. The application integrates modern frontend design paradigms with real-time web socket data to emulate live blockchain transactions, smart contract validations, and automated job/milestone tracking.
+**AICrypto Pay** is a high-performance, full-stack web application designed to simulate and manage an autonomous cryptocurrency payment and escrow ecosystem. The architecture seamlessly integrates low-latency real-time database synchronization with complex financial state machines to emulate live blockchain transactions, multi-stage smart contract validations, and automated milestone-based payouts.
 
-By leveraging **Google's Gemini AI**, the application powers intelligent interactions to automate smart-contract driven payouts and crypto escrow features.
+Built with security and scalability as core pillars, the engine leverages intelligent predictive parsing to dynamically analyze contract execution and automatically handle crypto escrow routing.
 
 ---
 
 ## 🏗 Architecture & Stack
 
-This application is built with a **Full-Stack SPA** architecture, decoupling modern frontend components from a robust Node.js express backend server that handles real-time synchronization.
+This platform is engineered using a decoupled **Full-Stack SPA** architecture, optimizing client-side performance while utilizing a robust Node.js multi-threaded environment for global real-time synchronization.
 
-### 🎨 Frontend
-* **Core:** [React 19](https://react.dev/) + [TypeScript](https://www.typescriptlang.org/)
-* **Build Tool:** [Vite](https://vitejs.dev/) - Lightning fast HMR and optimized production bundling.
-* **Styling:** [Tailwind CSS v4](https://tailwindcss.com/) - Utility-first styling for a sleek, responsive, and modern glassmorphic interface.
-* **Animations:** [Framer Motion](https://www.framer.com/motion/) - Smooth, dynamic micro-animations that make the UI feel alive.
-* **Icons:** [Lucide React](https://lucide.dev/)
+### 🎨 Frontend UI/UX
+* **Core Framework:** [React 19](https://react.dev/) + [TypeScript](https://www.typescriptlang.org/) for strict type safety and bulletproof component architecture.
+* **Build Architecture:** [Vite](https://vitejs.dev/) - Configured for optimized chunk-splitting and lightning-fast Production bundling.
+* **Interface Styling:** [Tailwind CSS v4](https://tailwindcss.com/) - Utilizing modern CSS variables to deploy a premium, high-end fluid glassmorphic UI.
+* **Micro-Interactions:** [Framer Motion](https://www.framer.com/motion/) - Smooth, continuous viewport transitions that maximize user engagement.
 
-### ⚙️ Backend & Real-Time Sync
-* **Server:** [Express.js](https://expressjs.com/) built on Node.js running `server.ts` directly via `tsx`.
-* **WebSockets:** [Socket.IO](https://socket.io/) - Used to broadcast live simulated blockchain transactions (`live_blockchain_activity`), new job posts, and milestone updates globally across all connected clients.
-* **AI Engine:** Google Gemini AI (`@google/genai`) for generating and validating complex AI-driven actions.
-
----
-
-## ✨ Features
-
-* **Live Global Dashboard:** Real-time stream of simulated Web3 events (e.g. *Safe Treasury locks*, *Oracle validators*, *Cold storage audits*) synchronized across all browser instances.
-* **Crypto Job Board & Escrow:** AI-generated crypto-funded jobs and milestones with seamless state management.
-* **Dynamic Animations:** A premium, "wow-factor" visual aesthetic featuring deep dark modes, glowing gradients, and fluid layout transitions.
-* **Responsive Design:** Completely optimized for both desktop and mobile layouts.
+### ⚙️ Backend & State Engine
+* **Server Infrastructure:** [Express.js](https://expressjs.com/) built on Node.js running an asynchronous TypeScript (`server.ts`) core engine.
+* **Real-Time Data Streaming:** [Socket.IO](https://socket.io/) - Custom event architecture built to pipe live simulated ledger activity (`live_blockchain_activity`), active escrows, and financial status updates instantly to all connected peers.
+* **Intelligent Automation:** Implemented deep API integration with LLM semantic models to process, generate, and securely validate complex automated project agreements on-the-fly.
 
 ---
 
-## 🛠 How to Run Locally
+## ✨ System Features
 
-### Prerequisites
-Make sure you have [Node.js](https://nodejs.org/) (v18+ recommended) installed on your system.
-
-### 1. Clone & Install
-```bash
-# Install NPM dependencies
-npm install
-```
-
-### 2. Configure Environment
-You need a Google Gemini API key to run the AI features.
-```bash
-# Copy the example env file
-cp .env.example .env.local
-```
-Open `.env.local` and add your Gemini API Key:
-```env
-GEMINI_API_KEY="your_api_key_here"
-```
-
-### 3. Start the Development Server
-The `dev` script concurrently starts both the Vite frontend server and the Express WebSocket backend.
-```bash
-npm run dev
-```
-> Your app will now be running live at **http://localhost:5173** (or the port specified in your console).
+* **Live Multi-Node Ledger Stream:** A real-time, WebSocket-driven simulation stream reflecting critical financial events (e.g., *Safe Treasury locks*, *Oracle network syncs*, *Cold storage security audits*).
+* **Automated Escrow Engine:** A fully realized job and contract board utilizing a precise backend state machine to safely lock, dispute, or release funds based on milestone criteria.
+* **High-End Component Design:** A flawless dark-mode design ecosystem utilizing glowing neon parameters, customized charts, and responsive layouts built perfectly for mobile and desktop screens.
 
 ---
-
-## 📦 Building for Production
-
-To create an optimized production build:
-
-1. **Build the bundle:**
-   ```bash
-   npm run build
-   ```
-   *This compiles the React frontend into static files and uses `esbuild` to compile the Express server into a standalone `server.cjs` script.*
-
-2. **Start the production server:**
-   ```bash
-   npm run start
-   ```
-
----
-
-<p align="center">
-  <i>Built with ❤️ for the future of Web3 & AI.</i>
-</p>
