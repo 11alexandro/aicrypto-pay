@@ -1,137 +1,310 @@
-<div align="center">
-  <img width="1200" height="475" alt="GHBanner" src="https://ai.google.dev/static/site-assets/images/share-ais-513315318.png" />
-</div>
+# ALCrypto-Pay
 
-<h1 align="center">AICrypto Pay</h1>
+**Full-Stack Crypto Escrow Platform for Freelancers & Clients**
 
-<p align="center">
-  <strong>The Next-Generation AI-Driven Cryptocurrency Payment Gateway</strong>
-</p>
+ALCrypto-Pay is a full-stack escrow platform inspired by modern Web3 payment systems. The application simulates how clients and freelancers can securely manage project payments using escrow workflows, balance tracking, dispute management, and real-time updates.
 
-<p align="center">
-  <img src="https://img.shields.io/badge/React-19.0-blue?style=for-the-badge&logo=react" alt="React" />
-  <img src="https://img.shields.io/badge/Vite-6.0-646CFF?style=for-the-badge&logo=vite" alt="Vite" />
-  <img src="https://img.shields.io/badge/Node.js-Express-339933?style=for-the-badge&logo=nodedotjs" alt="Node" />
-  <img src="https://img.shields.io/badge/MongoDB-Database-47A248?style=for-the-badge&logo=mongodb" alt="MongoDB" />
-  <img src="https://img.shields.io/badge/Socket.io-Realtime-010101?style=for-the-badge&logo=socketdotio" alt="Socket.io" />
-  <img src="https://img.shields.io/badge/TailwindCSS-v4.0-38B2AC?style=for-the-badge&logo=tailwind-css" alt="Tailwind" />
-</p>
+The goal of the project is to demonstrate full-stack development skills by combining React, Node.js, MongoDB, and real-time communication into a practical fintech-style application.
 
 ---
 
-## 🚀 Overview
+## Preview
 
-**AICrypto Pay** is an interactive, real-time web application built to simulate and explore a futuristic AI-driven cryptocurrency payment ecosystem. The application integrates modern frontend design paradigms with a robust **MongoDB backend**, RESTful APIs, and real-time web socket data to emulate live blockchain transactions, smart contract validations, and automated job/milestone tracking.
-
-This project features true backend Escrow Accounting logic. Clients can lock funds which transition into an escrow balance, and eventually get released or refunded based on the AI Oracle arbitration consensus.
+![ALCrypto-Pay Landing Page](./code/alcrypto-pay-preview.JPEG)
 
 ---
 
-## 🏗 Architecture Diagram
+## Project Overview
 
-```mermaid
-graph TD
-    subgraph Frontend [React 19 SPA]
-        A[Dashboard UI] -->|Socket.io| B(Live Balance Ticker)
-        C[Jobs Listing] -->|REST API| D(Node.js Backend)
-        E[Escrow Controls] -->|REST API| D
-    end
+Traditional freelance payments often require trust between clients and developers. ALCrypto-Pay introduces an escrow workflow where funds are held securely until project milestones are completed.
 
-    subgraph Backend [Express Node.js]
-        D -->|Mongoose| F[(MongoDB)]
-        D -->|Broadcasts| G(Socket.io Server)
-        G -.->|Events| A
-        G -.->|Events| C
-        G -.->|Events| E
-    end
+The platform allows users to:
 
-    subgraph Database [MongoDB Schemas]
-        F --> H[Users]
-        F --> I[Jobs]
-        F --> J[Escrow Transactions]
-        F --> K[Activity Logs]
-    end
+* Post and manage jobs
+* Fund escrow transactions
+* Track pending and withdrawable balances
+* Release payments upon completion
+* Open and manage disputes
+* Monitor activity through a real-time dashboard
+
+---
+
+## Features
+
+### Escrow Workflow
+
+Supports a complete payment lifecycle:
+
+```text
+Draft
+   ↓
+Funded
+   ↓
+In Progress
+   ↓
+Released
+   ↘
+   Disputed
+```
+
+### User Dashboard
+
+Track:
+
+* Wallet Balance
+* Pending Balance
+* Withdrawable Balance
+* Active Jobs
+* Completed Jobs
+* Transaction History
+
+### Job Management
+
+* Create jobs
+* Accept jobs
+* Monitor project status
+* Track escrow activity
+
+### Transaction Tracking
+
+* Escrow transactions
+* Payment releases
+* Funding history
+* Activity logs
+
+### MongoDB Persistence
+
+All critical application data is stored in MongoDB:
+
+* Users
+* Jobs
+* Escrow Transactions
+* Activity Logs
+
+Data remains available after server restarts.
+
+### Real-Time Updates
+
+The platform uses Socket.IO to provide:
+
+* Live activity updates
+* Instant dashboard synchronization
+* Real-time escrow status changes
+
+### Responsive Design
+
+Built to work across:
+
+* Desktop
+* Tablet
+* Mobile
+
+---
+
+## Tech Stack
+
+### Frontend
+
+* React
+* TypeScript
+* Tailwind CSS
+* Vite
+
+### Backend
+
+* Node.js
+* Express.js
+* Socket.IO
+
+### Database
+
+* MongoDB
+* Mongoose
+
+### Development Tools
+
+* Git
+* GitHub
+* ESLint
+
+---
+
+## Architecture
+
+```text
+React Frontend
+       │
+       ▼
+Express API
+       │
+ ┌─────┼───────────────┐
+ │     │               │
+ ▼     ▼               ▼
+MongoDB Escrow Engine Socket.IO
+ │
+ ├── Users
+ ├── Jobs
+ ├── Transactions
+ └── Activity Logs
 ```
 
 ---
 
-## 🏗 Architecture & Stack
+## Escrow Accounting Logic
 
-This application is built with a **Full-Stack SPA** architecture, decoupling modern frontend components from a robust Node.js express backend server that handles data persistence and real-time synchronization.
+The project implements a simplified escrow accounting model.
 
-### 🎨 Frontend
-* **Core:** [React 19](https://react.dev/) + [TypeScript](https://www.typescriptlang.org/)
-* **Build Tool:** [Vite](https://vitejs.dev/)
-* **Styling:** [Tailwind CSS v4](https://tailwindcss.com/)
-* **Animations:** [Framer Motion](https://www.framer.com/motion/)
-* **Icons:** [Lucide React](https://lucide.dev/)
+### Fund Job
 
-### ⚙️ Backend & Real-Time Sync
-* **Server:** [Express.js](https://expressjs.com/) built on Node.js running `server.ts`.
-* **Database:** **MongoDB** with **Mongoose** ORM for robust data persistence.
-* **WebSockets:** [Socket.IO](https://socket.io/) - Used to broadcast live simulated blockchain transactions (`live_blockchain_activity`), new job posts, and milestone updates globally across all connected clients.
-* **REST API:** Handles full CRUD operations for Jobs, Users, and Escrow Transactions.
+```text
+Client Wallet Balance
+          ↓
+     Escrow Account
+```
+
+### Release Payment
+
+```text
+Escrow Account
+          ↓
+Freelancer Withdrawable Balance
+```
+
+### Dispute
+
+```text
+Escrow Account
+          ↓
+Funds Locked Until Resolution
+```
+
+This structure demonstrates how payment platforms can separate available funds from pending funds.
 
 ---
 
-## ✨ Features
+## API Endpoints
 
-* **Escrow Logic Accounting:** Strict transition rules for moving funds from Client Wallets -> Pending Escrow -> Freelancer Withdrawals.
-* **Live Global Dashboard:** Real-time stream of simulated Web3 events (e.g. *Safe Treasury locks*, *Oracle validators*, *Cold storage audits*) synchronized across all browser instances.
-* **Crypto Job Board:** Post, fund, dispute, and release crypto jobs safely.
-* **Dynamic Animations:** A premium, "wow-factor" visual aesthetic featuring deep dark modes, glowing gradients, and fluid layout transitions.
-* **Responsive Design:** Completely optimized for both desktop and mobile layouts.
+### Jobs
+
+```http
+POST   /api/jobs
+GET    /api/jobs
+GET    /api/jobs/:id
+```
+
+### Escrow Actions
+
+```http
+POST /api/jobs/:id/fund
+POST /api/jobs/:id/start
+POST /api/jobs/:id/release
+POST /api/jobs/:id/dispute
+POST /api/jobs/:id/resolve
+```
+
+### Dashboard
+
+```http
+GET /api/dashboard
+GET /api/transactions
+```
 
 ---
 
-## 🛠 How to Run Locally
+## Installation
 
-### Prerequisites
-Make sure you have [Node.js](https://nodejs.org/) (v18+ recommended) and **MongoDB** installed on your system.
+### Clone Repository
 
-### 1. Clone & Install
 ```bash
-# Install NPM dependencies
+git clone https://github.com/your-username/alcrypto-pay.git
+cd alcrypto-pay
+```
+
+### Install Dependencies
+
+Frontend
+
+```bash
 npm install
 ```
 
-### 2. Configure Environment
-Copy the example environment file:
+Backend
+
 ```bash
-cp .env.example .env
-```
-Open `.env` and set your MongoDB connection string (defaults to local):
-```env
-MONGODB_URI="mongodb://127.0.0.1:27017/alcrypto-pay"
-PORT=3000
+cd server
+npm install
 ```
 
-### 3. Start the Development Server
-The `dev` script concurrently starts both the Vite frontend server and the Express backend.
+### Environment Variables
+
+Create a `.env` file:
+
+```env
+PORT=5000
+MONGODB_URI=your_mongodb_connection_string
+```
+
+### Start Application
+
+Backend
+
+```bash
+npm run server
+```
+
+Frontend
+
 ```bash
 npm run dev
 ```
-> Your app will now be running live at **http://localhost:5173** (or the port specified in your console).
 
 ---
 
-## 📦 Building for Production
+## What I Learned
 
-To create an optimized production build:
+While building ALCrypto-Pay I worked on:
 
-1. **Build the bundle:**
-   ```bash
-   npm run build
-   ```
-   *This compiles the React frontend into static files and uses `esbuild` to compile the Express server into a standalone `server.cjs` script.*
-
-2. **Start the production server:**
-   ```bash
-   npm run start
-   ```
+* Escrow state management
+* MongoDB data modeling
+* REST API development
+* Real-time communication with Socket.IO
+* Full-stack application architecture
+* Fintech-style dashboard design
+* Responsive frontend development
 
 ---
 
-<p align="center">
-  <i>Built with ❤️ for the future of Web3 & AI.</i>
-</p>
+## Future Improvements
+
+Planned enhancements:
+
+* MetaMask wallet integration
+* Blockchain transaction verification
+* Binance Pay simulation
+* Multi-signature approval workflows
+* Advanced dispute resolution system
+* Role-based permissions
+* Audit logs
+
+---
+
+## Disclaimer
+
+This project is a portfolio and educational project designed to demonstrate full-stack development concepts, escrow workflows, and fintech-style application architecture.
+
+It does not process real cryptocurrency transactions and should not be used as a production payment platform.
+
+---
+
+## Author
+
+**Alex Valmyr**
+
+Frontend & Full-Stack Developer
+
+Specializing in:
+
+* Fintech Applications
+* Trading Dashboards
+* Web3 Interfaces
+* Full-Stack JavaScript Development
