@@ -50,7 +50,7 @@ export default function ExploreJobsView({
     return matchesSearch;
   });
 
-  const handleCreateJobSubmit = (e: React.FormEvent) => {
+  const handleCreateJobSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     if (!newTitle || !newClient || !newDesc) return;
 
@@ -61,10 +61,12 @@ export default function ExploreJobsView({
     else if (newToken === 'SOL') tokenAmount = parseFloat((newBudget / 150).toFixed(2));
     else tokenAmount = newBudget;
 
-    const generatedJob: Job = {
-      id: `job-${Date.now()}`,
+    const generatedJob = {
       title: newTitle,
       client: newClient,
+      clientId: 'client-1',
+      freelancerId: 'freelancer-1',
+      budget: newBudget,
       freelancer: 'Pending Assignment',
       description: newDesc,
       escrowAmount: newBudget,
@@ -97,8 +99,19 @@ export default function ExploreJobsView({
       ]
     };
 
-    onAddJob(generatedJob);
-    socketService.broadcastNewJob(generatedJob);
+    try {
+      const res = await fetch('/api/jobs', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(generatedJob)
+      });
+      const savedJob = await res.json();
+      onAddJob(savedJob);
+      socketService.broadcastNewJob(savedJob);
+    } catch (err) {
+      console.error(err);
+    }
+
     setShowCreateModal(false);
     // Reset inputs
     setNewTitle('');
@@ -107,14 +120,20 @@ export default function ExploreJobsView({
     setNewBudget(2500);
   };
 
-  const executeMockFunding = () => {
+  const executeMockFunding = async () => {
     if (!fundingJob) return;
     setIsFundingProcessing(true);
-    setTimeout(() => {
-      onUpdateJobStatus(fundingJob.id, 'Funded');
+    try {
+      const res = await fetch(`/api/jobs/${fundingJob.id}/fund`, { method: 'POST' });
+      if (res.ok) {
+        onUpdateJobStatus(fundingJob.id, 'Funded');
+      }
+    } catch (err) {
+      console.error(err);
+    } finally {
       setIsFundingProcessing(false);
       setFundingJob(null);
-    }, 1800);
+    }
   };
 
   return (

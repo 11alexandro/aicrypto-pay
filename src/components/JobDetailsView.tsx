@@ -65,27 +65,39 @@ export default function JobDetailsView({
     setNewChatInput('');
   };
 
-  const handleLaunchDispute = () => {
+  const handleLaunchDispute = async () => {
     setIsAiEvaluating(true);
     setAiResolutionOffer(null);
+    try {
+      await fetch(`/api/jobs/${job.id}/dispute`, { method: 'POST' });
+      onUpdateJobStatus(job.id, 'Disputed');
+    } catch (e) {
+      console.error(e);
+    }
     setTimeout(() => {
       setIsAiEvaluating(false);
       setAiResolutionOffer("Our AI oracle static analysis reports 100% code delivery matches milestones requirements! Commits audited 0x2BA4. Consensus payout resolution proposed: Release 80% to Developer, refund 20% back to Client.");
     }, 2800);
   };
 
-  const triggerMilestoneFundRelease = (milestoneId: string, isFundAction: boolean) => {
+  const triggerMilestoneFundRelease = async (milestoneId: string, isFundAction: boolean) => {
     const actionKey = `${milestoneId}-${isFundAction ? 'fund' : 'release'}`;
     setIsProcessingAction(actionKey);
 
-    setTimeout(() => {
+    try {
+      const endpoint = isFundAction ? `/api/jobs/${job.id}/fund` : `/api/jobs/${job.id}/release`;
+      await fetch(endpoint, { method: 'POST' });
+      
       const nextStatus = isFundAction ? 'Funded' : 'Released';
       onUpdateMilestoneStatus(job.id, milestoneId, nextStatus);
       socketService.broadcastMilestoneUpdate({ jobId: job.id, milestoneId, status: nextStatus });
+    } catch (e) {
+      console.error(e);
+    } finally {
       setIsProcessingAction(null);
       setSuccessAnimation(milestoneId);
       setTimeout(() => setSuccessAnimation(null), 3000);
-    }, 1500);
+    }
   };
 
   return (
@@ -425,11 +437,18 @@ export default function JobDetailsView({
                     </p>
                     
                     <button
-                      onClick={() => {
-                        onUpdateJobStatus(job.id, 'Released');
-                        setAiResolutionOffer(null);
-                        setDisputeMessage('');
-                        setActiveArbitrationTab('details');
+                      onClick={async () => {
+                        try {
+                          await fetch(`/api/jobs/${job.id}/resolve`, {
+                            method: 'POST',
+                            headers: { 'Content-Type': 'application/json' },
+                            body: JSON.stringify({ resolution: 'release' })
+                          });
+                          onUpdateJobStatus(job.id, 'Released');
+                          setAiResolutionOffer(null);
+                          setDisputeMessage('');
+                          setActiveArbitrationTab('details');
+                        } catch(e) { console.error(e); }
                       }}
                       className={`mt-2 py-1 font-mono text-[9px] font-bold rounded border transition-colors ${
                         darkMode ? 'bg-amber-400 border-amber-400 hover:bg-amber-500 text-neutral-900' : 'bg-indigo-600 border-indigo-600 text-white hover:bg-indigo-700'

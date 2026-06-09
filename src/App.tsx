@@ -108,114 +108,20 @@ export default function App() {
     };
   }, []);
 
-  // High-fidelity active web3 escrow sample jobs list
-  const [jobs, setJobs] = useState<Job[]>([
-    {
-      id: 'job-1',
-      title: 'Solana Token Swap Interface & Priority Router',
-      client: 'Jupiter Labs Foundation',
-      freelancer: '0xAlex...124D',
-      description: 'Implement custom routing swap interface with dynamic priority gas fee options. Ensure precise SDK implementation for token account wrapping and route optimization.',
-      escrowAmount: 4500,
-      escrowToken: 'SOL',
-      tokenAmount: 30,
-      status: 'In Progress',
-      createdAt: '18 May 2026',
-      milestones: [
-        {
-          id: 'm-1-1',
-          title: 'UX/UI Wireframe Layout Approval',
-          amountPercent: 30,
-          status: 'Released',
-          description: 'High fidelity Figma mockup of swap panel and prioritized RPC endpoint panel.'
-        },
-        {
-          id: 'm-1-2',
-          title: 'Router SDK RPC Integration & Multi-route Payout',
-          amountPercent: 40,
-          status: 'Funded',
-          description: 'Integrate standard Jupiter API swap routes dynamically and display priority options.'
-        },
-        {
-          id: 'm-1-3',
-          title: 'Mainnet Release Delivery & Gas Testing',
-          amountPercent: 30,
-          status: 'Pending',
-          description: 'Deploy swap widget cleanly inside react SPA, test prioritizations with real test SOL.'
+  // Fetch active web3 escrow jobs from backend
+  const [jobs, setJobs] = useState<Job[]>([]);
+
+  useEffect(() => {
+    fetch('/api/jobs')
+      .then(res => res.json())
+      .then(data => {
+        if (Array.isArray(data)) {
+          setJobs(data);
+          if (data.length > 0) setSelectedJobId(data[0].id);
         }
-      ]
-    },
-    {
-      id: 'job-2',
-      title: 'Smart Contract Audit & Loan Parameter Verification',
-      client: 'Aave Dev Initiative',
-      freelancer: '0xVerif...98DE',
-      description: 'Perform complete formal static analysis audit on proposed smart pool parameter changes. Verify loan solvency thresholds with mathematical formal proofs.',
-      escrowAmount: 12800,
-      escrowToken: 'ETH',
-      tokenAmount: 4,
-      status: 'In Progress',
-      createdAt: '11 May 2026',
-      milestones: [
-        {
-          id: 'm-2-1',
-          title: 'Static Analysis Suite Execution & Logs',
-          amountPercent: 30,
-          status: 'Released',
-          description: 'Run automatic Slither/Mythril scans on smart contracts and address critical warnings.'
-        },
-        {
-          id: 'm-2-2',
-          title: 'Loan solvency thresholds parameter proofing',
-          amountPercent: 40,
-          status: 'Released',
-          description: 'Provide math verification documents representing liquidity loan buffer outcomes.'
-        },
-        {
-          id: 'm-2-3',
-          title: 'Draft Formal Verification Certificate',
-          amountPercent: 30,
-          status: 'Funded',
-          description: 'Generate standard formal audit report signed by lead auditor cryptographic keys.'
-        }
-      ]
-    },
-    {
-      id: 'job-3',
-      title: 'Multi-Sig Safe Client Custom Dashboard',
-      client: 'Safe Ecosystem Fund',
-      freelancer: 'Pending Contractor Signature',
-      description: 'Implement frontend interface representing newly customized v1.4 Multisig specs, with quick hardware wallet hook capabilities and offline signatures storage.',
-      escrowAmount: 8000,
-      escrowToken: 'USDT',
-      tokenAmount: 8000,
-      status: 'Draft',
-      createdAt: '24 May 2026',
-      milestones: [
-        {
-          id: 'm-3-1',
-          title: 'Safe API Hook Handover & Signature UI',
-          amountPercent: 30,
-          status: 'Pending',
-          description: 'Implement standard connect wallet modules and multi-sig dashboard overview.'
-        },
-        {
-          id: 'm-3-2',
-          title: 'Offline signature storage integration',
-          amountPercent: 40,
-          status: 'Pending',
-          description: 'Setup IndexedDB storage structure for offline signatures queues safely.'
-        },
-        {
-          id: 'm-3-3',
-          title: 'Production release ready for security checkers',
-          amountPercent: 30,
-          status: 'Pending',
-          description: 'Deliver production build and deploy live onto test subnet environment.'
-        }
-      ]
-    }
-  ]);
+      })
+      .catch(err => console.error("Failed to fetch jobs:", err));
+  }, []);
 
   const [selectedJobId, setSelectedJobId] = useState<string>('job-1');
 
